@@ -3,7 +3,7 @@ import smtplib
 smtpserver = 'smtp.gmail.com'
 AUTHREQUIRED = 1 
 smtpuser = 'ashloverscn@gmail.com'  
-smtppass = 'gckb lspa jitx xrna'  
+smtppass = 'gckb lspa bjzg xrna'  
 
 RECIPIENTS = 'ash.temp.new@gmail.com'
 SENDER = 'ashloverscn@gmail.com'
