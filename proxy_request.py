@@ -16,7 +16,7 @@ while True:
     r = requests.get(url)
     print(f'Status Code Direct: {r.status_code}')
     print(f'Raw Respones Direct: {r.text}')
-    r = requests.get(url,  proxies=proxies)
+    r = requests.get(url, proxies=proxies)
     print(f'Status Code Proxied: {r.status_code}')
     print(f'Raw Respones Proxied: {r.text}')
     time.sleep(1)
