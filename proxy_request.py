@@ -4,8 +4,8 @@ import requests
 proxies = {
     #'http': 'socks5://ash:ash@192.168.85.221:1080',
     #'https': 'socks5://ash:ash@192.168.85.221:1080'
-    'http': 'socks5://aTtK3zBio1zplQyB:xJo9aGmyF6m4nGbb_streaming-1@103.214.44.131:32325',
-    'https': 'socks5://aTtK3zBio1zplQyB:xJo9aGmyF6m4nGbb_streaming-1@103.214.44.131:32325'
+    'http': 'socks5://aTtK3zBio1zplQyB:xJo9aGmyF6m4nGbb_streaming-1@geo.iproyal.com:32325',
+    'https': 'socks5://aTtK3zBio1zplQyB:xJo9aGmyF6m4nGbb_streaming-1@geo.iproyal.com:32325'
 }
 
 #url = 'https://ifconfig.me'
