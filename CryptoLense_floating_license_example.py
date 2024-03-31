@@ -15,6 +15,14 @@ result = Key.activate(token=auth,\
                    machine_code=Helpers.GetMachineCode(v=2),\
                    floating_time_interval=floating_time_interval,\
                    max_overdraft=max_overdraft)
+def activation_recheck():
+    result = Key.activate(token=auth,\
+                   rsa_pub_key=RSAPubKey,\
+                   product_id=product_id, \
+                   key=key,\
+                   machine_code=Helpers.GetMachineCode(v=2),\
+                   floating_time_interval=floating_time_interval,\
+                   max_overdraft=max_overdraft)
 #if result[0] == None:
 if result[0] == None or not Helpers.IsOnRightMachine(result[0], is_floating_license=True, allow_overdraft=True, v=2):
     activation = False
@@ -27,3 +35,6 @@ else:
     print("License expires: " + str(license_key.expires))
 
 print(activation)
+
+while(1):
+    activation_recheck()
