@@ -27,8 +27,6 @@ else:
     print("Feature 1: " + str(license_key.f1))
     print("License expires: " + str(license_key.expires))
 
-print(activation)
-
 activation_time = time.time()
 def activation_recheck():
     result = Key.activate(token=auth,\
