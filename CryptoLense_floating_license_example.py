@@ -38,3 +38,4 @@ print(activation)
 
 while(1):
     activation_recheck()
+    print("licence still active")
