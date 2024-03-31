@@ -1,11 +1,12 @@
 from licensing.models import *
 from licensing.methods import Key, Helpers
+import time
 
 RSAPubKey = "<RSAKeyValue><Modulus>tb4Dkt6rKhnkMt12EwOx/M9Woa+MRSjgkNXqSpA9zzH7KntfNUuCypQuZ1z7kbLhvJ/gXaJCBt/n4j3Ji7TfT8h4OmR1DIjY9OgtUDYFD9zU73rLzdnIgFsS/3S3Rls0Ub1soUnE7eBkp2ikRzTOlm4N0pkC5Y7adBJdmHYTCPiyWyUd3wOKgIB04MDxPZH+Dcdk5kzsieMhuhzlmfJ2T1BUlV6EoPrjhcDcCXkYSPQCJy7bKHx2YPT4KlSK6DkaDf+XC/ngmUR+b8rLdlTmHomcyWAdz5F7jPTbHKspBlro7QXJflnY+tGjY105WgKofh2oB26TTL9AXFBwelWmQw==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>"
 auth = "WyI3NzIzMDg5MyIsInY5UEUyWW56QVdVbmFHNkpvbXF3NjFlRXo4YlFtdnkyaC8vMjhGd2UiXQ=="
 key = "JRLFQ-IRYBO-DDQZQ-MTDGB"
 product_id=24509
-floating_time_interval=18
+floating_time_interval=8
 max_overdraft=1
 global activation
 result = Key.activate(token=auth,\
@@ -15,6 +16,7 @@ result = Key.activate(token=auth,\
                    machine_code=Helpers.GetMachineCode(v=2),\
                    floating_time_interval=floating_time_interval,\
                    max_overdraft=max_overdraft)
+activation_time = time.time()
 def activation_recheck():
     result = Key.activate(token=auth,\
                    rsa_pub_key=RSAPubKey,\
@@ -37,5 +39,7 @@ else:
 print(activation)
 
 while(1):
-    activation_recheck()
-    print("licence still active")
+    if(time.time() >= activation_time + floating_time_interval):
+        activation_time = time.time()
+        activation_recheck()
+        print("licence still active")
