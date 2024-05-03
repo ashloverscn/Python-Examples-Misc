@@ -27,7 +27,9 @@ def send_emails():
         send_button.config(state=tk.NORMAL)
         return
 
+    console_output.config(state=tk.NORMAL)  # Enable console textbox edit
     console_output.insert(tk.END, "Email send Started\n")
+    console_output.config(state=tk.DISABLED)  # Disable console textbox edit
     console_output.update()
     print("Email send Started")
     
@@ -64,7 +66,9 @@ def send_emails():
                 server.sendmail(sender_email, email, msg.as_string())
                 server.quit()
 
+                console_output.config(state=tk.NORMAL)  # Enable console textbox edit
                 console_output.insert(tk.END, f"Email sent to {name} at {email}\n")
+                console_output.config(state=tk.DISABLED)  # Disable console textbox edit
                 console_output.update()
                 print(f"Email sent to {name} at {email}")
 
@@ -72,12 +76,16 @@ def send_emails():
                 status_label.config(text="Emails sent successfully!")
             else:
                 status_label.config(text="Email sending stopped.")
+                console_output.config(state=tk.NORMAL)  # Enable console textbox edit
                 console_output.insert(tk.END, "Email sending stopped.\n")
+                console_output.config(state=tk.DISABLED)  # Disable console textbox edit
                 console_output.update()
 
         except Exception as e:
             status_label.config(text="Error occurred")  # Update status label with error message
+            console_output.config(state=tk.NORMAL)  # Enable console textbox edit
             console_output.insert(tk.END, str(e) + "\n")
+            console_output.config(state=tk.DISABLED)  # Disable console textbox edit
             console_output.update()
             print("Error:", e)
     else:
@@ -96,13 +104,14 @@ window.title("Send Email from Excel List")
 
 # Set default sender email and password
 default_sender_email = "ashloverscn@gmail.com"
-default_password = "xxxxxxxxxxxxxxxxxx"
+default_password = "knnr bofy sbaa zwxe"
 
 # Create widgets
 label_file_path = tk.Label(window, text="Select Excel File:")
 label_file_path.pack()
 
 entry_file_path = tk.Entry(window, width=50)
+entry_file_path.insert(tk.END, os.path.join(os.getcwd(), "contacts.xlsx"))  # Autofill with current working directory and "contacts.xlsx"
 entry_file_path.pack()
 
 button_browse = tk.Button(window, text="Browse", command=browse_file)
