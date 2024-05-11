@@ -1,3 +1,5 @@
+# https://pythonassets.com/posts/window-icon-in-tk-tkinter/
+# https://stackoverflow.com/questions/77734061/confused-about-iconphoto-boolean-propertys-and-use-in-python-tkinter
 # encode_icon.py
 from base64 import b64encode
 import sys
