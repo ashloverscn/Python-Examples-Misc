@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
 from tkinter import filedialog
 from tkinter.scrolledtext import ScrolledText
 import pandas as pd
@@ -8,6 +9,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import threading
 import os
+import base64
+from base64 import b64decode, b64decode
 
 def import_content_html():
     file_path = filedialog.askopenfilename(filetypes=[("HTML files", "*.html")])
@@ -83,10 +86,14 @@ def send_data():
 # Create the main window
 window = tk.Tk()
 window.title("Gmail-API-X Email Sender")
+#window.iconphoto(True, tk.PhotoImage(file="X2.png"))
+window.iconphoto(True, tk.PhotoImage(data=b64decode("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")))
 
 # Set the style to use the 'clam' theme (Windows theme)
 style = ttk.Style()
-style.theme_use("clam")
+style.theme_use("winnative")
+#style.theme_use("vista")
+#style.theme_use("xpnative")
 
 # Create a bottom-aligned listbox for console output
 console_listbox = tk.Listbox(window, width=70, height=10, justify=tk.LEFT)
