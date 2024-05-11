@@ -1,6 +1,12 @@
 import tkinter as tk
-from tkinter import filedialog
 from tkinter import ttk
+from tkinter import filedialog
+from tkinter.scrolledtext import ScrolledText
+import pandas as pd
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import threading
 import os
 
 def import_content_html():
@@ -75,15 +81,15 @@ def send_data():
         console_listbox.insert(tk.END, "Sending stopped.")
 
 # Create the main window
-root = tk.Tk()
-root.title("File Browser Example")
+window = tk.Tk()
+window.title("Gmail-API-X Email Sender")
 
 # Set the style to use the 'clam' theme (Windows theme)
 style = ttk.Style()
 style.theme_use("clam")
 
 # Create a bottom-aligned listbox for console output
-console_listbox = tk.Listbox(root, width=70, height=10, justify=tk.LEFT)
+console_listbox = tk.Listbox(window, width=70, height=10, justify=tk.LEFT)
 console_listbox.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
 # Create and pack buttons
@@ -99,12 +105,12 @@ buttons_info = [
 ]
 
 for button_text, command_func in buttons_info:
-    button = tk.Button(root, text=button_text, command=command_func)
+    button = tk.Button(window, text=button_text, command=command_func)
     button.pack(side=tk.LEFT)
 
 # Create a "Send" button with initial text "Send" and color red
-send_button = tk.Button(root, text="Send", command=send_data, fg="red")
+send_button = tk.Button(window, text="Send", command=send_data, fg="red")
 send_button.pack(side=tk.BOTTOM, pady=10)
 
 # Run the Tkinter event loop
-root.mainloop()
+window.mainloop()
