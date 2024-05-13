@@ -11,7 +11,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk,ImageFont, ImageDraw
 import base64
-from base64 import b64decode, b64decode
+from base64 import b64encode, b64decode
 
 # Create the main window
 window = tk.Tk()
