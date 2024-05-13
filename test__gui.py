@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import threading
 import base64
-from base64 import b64decode, b64decode
+from base64 import b64encode, b64decode
 
 def import_content_html():
     file_path = filedialog.askopenfilename(filetypes=[("HTML files", "*.html")])
