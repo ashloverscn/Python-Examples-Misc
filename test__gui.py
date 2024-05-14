@@ -2,16 +2,8 @@ import sys
 import os
 import tkinter as tk
 from tkinter import ttk
-from PIL import Image, ImageTk,ImageFont, ImageDraw
 from tkinter import filedialog
 from tkinter.scrolledtext import ScrolledText
-import pandas as pd
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import threading
-import base64
-from base64 import b64encode, b64decode
 
 def import_content_html():
     file_path = filedialog.askopenfilename(filetypes=[("HTML files", "*.html")])
@@ -87,9 +79,11 @@ def send_data():
 # Create the main window
 window = tk.Tk()
 window.title("Gmail-API-X Email Sender")
+# to use Sysem executable icon compile with pyinstaller as follows to pack the ico file in the exe :
+# pyinstaller --clean --noconsole --onefile --icon=Gmail-API-X.ico --add-data "Gmail-API-X.ico;." test__gui.py
 #window.iconbitmap(sys.executable) # did not work for me
 # the unSmarter way is to rely only on the MEIPASS temp_dir for the icon file path, available only afer the exe is ready
-#window.iconbitmap(True, default=str(sys._MEIPASS) +"/"+ "X2.ico")
+#window.iconbitmap(True, default=str(sys._MEIPASS) +"/"+ "Gmail-API-X.ico")
 # the Smarter way is to keep a fail-Safe using a function for the icon file path, packed in the exe and as well from the present working directory
 def icon_path(ico_file_path):    
     try:       
@@ -97,7 +91,7 @@ def icon_path(ico_file_path):
     except Exception:
         root_path = os.path.abspath(".")
     return os.path.join(root_path, ico_file_path)
-window.iconbitmap(True, default=icon_path("X2.ico"))
+window.iconbitmap(True, default=icon_path("Gmail-API-X.ico"))
 
 # Set the style to use the 'clam' theme (Windows theme)
 style = ttk.Style()
@@ -105,29 +99,42 @@ style.theme_use("winnative")
 #style.theme_use("vista")
 #style.theme_use("xpnative")
 
-# Create a bottom-aligned listbox for console output
+# Create and pack buttons using grid with padding set to 0
+import_content_html_button = tk.Button(window, text="Import_Credentials.JSON", command=import_credentials_json)
+import_content_html_button.grid(row=0, column=0, padx=0, pady=0)
+
+import_content_html_button = tk.Button(window, text="Import_Credentials.XLSX", command=import_credentials_xlsx)
+import_content_html_button.grid(row=0, column=1, padx=0, pady=0)
+
+import_content_html_button = tk.Button(window, text="Import_Subject.XLSX", command=import_subject_xlsx)
+import_content_html_button.grid(row=0, column=2, padx=0, pady=0)
+
+import_content_html_button = tk.Button(window, text="Import_FromName.XLSX", command=import_from_name_xlsx)
+import_content_html_button.grid(row=0, column=3, padx=0, pady=0)
+
+import_content_html_button = tk.Button(window, text="Import_Body.XLSX", command=import_body_xlsx)
+import_content_html_button.grid(row=0, column=4, padx=0, pady=0)
+
+import_content_html_button = tk.Button(window, text="Import_Contacts.CSV", command=import_contacts_csv)
+import_content_html_button.grid(row=0, column=5, padx=0, pady=0)
+
+import_content_html_button = tk.Button(window, text="Import_TFN_PHONE_NO.XLSX", command=import_tfn_phone_no_xlsx)
+import_content_html_button.grid(row=0, column=6, padx=0, pady=0)
+
+import_content_html_button = tk.Button(window, text="Import_Content_HTML", command=import_content_html)
+import_content_html_button.grid(row=0, column=7, padx=0, pady=0)
+
+# Create and pack the Send button using grid, placed in row 0 and right-aligned
+send_button = tk.Button(window, text="Send", width=8, height=0,  command=send_data)
+send_button.grid(row=0, column=8, padx=0, pady=0)
+
+# Create a bottom-aligned listbox for console output using grid
 console_listbox = tk.Listbox(window, width=70, height=10, justify=tk.LEFT)
-console_listbox.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True, padx=10, pady=10)
+console_listbox.grid(row=1, column=0, columnspan=9, padx=5, pady=5, sticky="nsew")
 
-# Create and pack buttons
-buttons_info = [
-    ("Import_Content_HTML", import_content_html),
-    ("Import_Credentials.JSON", import_credentials_json),
-    ("Import_Credentials.XLSX", import_credentials_xlsx),
-    ("Import_FromName.XLSX", import_from_name_xlsx),
-    ("Import_Contacts.CSV", import_contacts_csv),
-    ("Import_Body.XLSX", import_body_xlsx),
-    ("Import_Subject.XLSX", import_subject_xlsx),
-    ("Import_TFN_PHONE_NO.XLSX", import_tfn_phone_no_xlsx),
-]
-
-for button_text, command_func in buttons_info:
-    button = tk.Button(window, text=button_text, command=command_func)
-    button.pack(side=tk.LEFT)
-
-# Create a "Send" button with initial text "Send" and color red
-send_button = tk.Button(window, text="Send", command=send_data, fg="red")
-send_button.pack(side=tk.BOTTOM, pady=10)
+# Configure row and column to expand with window resizing
+window.rowconfigure(1, weight=1)
+##window.columnconfigure(0, weight=1)
 
 # Run the Tkinter event loop
 window.mainloop()
