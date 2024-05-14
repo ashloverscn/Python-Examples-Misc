@@ -1,38 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-todo: Documentation
-
-    Project name: _Studi_
-    File name: tkinter_base64_image-ico
-
-    Date created: 30/12/2019
-    Date last modified: 22/1/2020
-    Status: Stable
-
-    Python version: 3.8
-    Modules required: pillow
-"""
-__author__ = 'Ariel Montes Nogueira'
-__website__ = 'http://www.montes.ml'
-__email__ = 'arielmontes1989@gmail.com'
-
-__copyright__ = 'Copyright © 2020-present Ariel Montes Nogueira'
-__credits__ = []
-__license__ = '''
-                Licensed under the Apache License, Version 2.0 (the "License");
-                you may not use this file except in compliance with the License.
-                You may obtain a copy of the License at
-
-                    http://www.apache.org/licenses/LICENSE-2.0
-
-                Unless required by applicable law or agreed to in writing, software
-                distributed under the License is distributed on an "AS IS" BASIS,
-                WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-                See the License for the specific language governing permissions and
-                limitations under the License.'''
-__recovery__ = 'https://github.com/Ariel-MN/Tkinter_base64_Images'
-__version__ = '1.0'
-
+#https://github.com/Ariel-MN/Tkinter_base64_Images
 from base64 import b64decode
 from PIL import Image, ImageTk
 from tkinter import Tk, PhotoImage, Label
