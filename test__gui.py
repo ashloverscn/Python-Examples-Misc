@@ -8,11 +8,11 @@ from tkinter.scrolledtext import ScrolledText
 def import_content_html():
     file_path = filedialog.askopenfilename(filetypes=[("HTML files", "*.html")])
     if file_path:
-        console_listbox.insert(tk.END, f"Import_Content_HTML: {file_path}")
+        console_output.insert(tk.END, f"Import_Content_HTML: {file_path}")
 
 def import_credentials_json():
     if directory_path:
-        console_listbox.insert(tk.END, f"Import_Credentials.JSON from directory: {directory_path}")
+        console_output.insert(tk.END, f"Import_Credentials.JSON from directory: {directory_path}")
 
         # Call the import_credentials function with the selected directory path
         import_credentials(directory_path)
@@ -34,47 +34,47 @@ def import_credentials(directory_path):
             output_file_path = os.path.join(f'./credentials/', filename)
             with open(output_file_path, 'wb') as output_file:
                 output_file.write(binary_data)
-                console_listbox.insert(tk.END, f"File successfully written as binary to {output_file_path}")
+                console_output.insert(tk.END, f"File successfully written as binary to {output_file_path}")
 
 def import_credentials_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_listbox.insert(tk.END, f"Import_Credentials.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_Credentials.XLSX: {file_path}")
 
 def import_from_name_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_listbox.insert(tk.END, f"Import_FromName.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_FromName.XLSX: {file_path}")
 
 def import_contacts_csv():
     file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
     if file_path:
-        console_listbox.insert(tk.END, f"Import_Contacts.CSV: {file_path}")
+        console_output.insert(tk.END, f"Import_Contacts.CSV: {file_path}")
 
 def import_body_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_listbox.insert(tk.END, f"Import_Body.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_Body.XLSX: {file_path}")
 
 def import_subject_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_listbox.insert(tk.END, f"Import_Subject.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_Subject.XLSX: {file_path}")
 
 def import_tfn_phone_no_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_listbox.insert(tk.END, f"Import_TFN_PHONE_NO.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_TFN_PHONE_NO.XLSX: {file_path}")
 
 def send_data():
     if send_button.cget("text") == "Send":
         send_button.config(text="Sending", fg="green")
-        console_listbox.insert(tk.END, "Sending...")
+        console_output.insert(tk.END, "Sending...\n")
         print("Data sent!")
         # Add additional logic if needed
     else:
         send_button.config(text="Send", fg="red")
-        console_listbox.insert(tk.END, "Sending stopped.")
+        console_output.insert(tk.END, "Sending stopped.\n")
 
 # Create the main window
 window = tk.Tk()
@@ -129,8 +129,8 @@ send_button = tk.Button(window, text="Send", width=8, height=0,  command=send_da
 send_button.grid(row=0, column=8, padx=0, pady=0)
 
 # Create a bottom-aligned listbox for console output using grid
-console_listbox = tk.Listbox(window, width=70, height=10, justify=tk.LEFT)
-console_listbox.grid(row=1, column=0, columnspan=9, padx=5, pady=5, sticky="nsew")
+console_output = ScrolledText(window, width=70, height=10)
+console_output.grid(row=1, column=0, columnspan=9, padx=5, pady=5, sticky="nsew")
 
 # Configure row and column to expand with window resizing
 window.rowconfigure(1, weight=1)
