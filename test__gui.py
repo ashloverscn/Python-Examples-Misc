@@ -66,16 +66,38 @@ def import_tfn_phone_no_xlsx():
     if file_path:
         console_output.insert(tk.END, f"Import_TFN_PHONE_NO.XLSX: {file_path}")
 
+def en_dis_unnec_buttons(state):
+    if state == "NORMAL":
+        import_credentials_json_button.config(state=tk.NORMAL)
+        import_credentials_xlsx_button.config(state=tk.NORMAL)
+        import_subject_xlsx_button.config(state=tk.NORMAL)
+        import_from_name_xlsx_button.config(state=tk.NORMAL)
+        import_body_xlsx_button.config(state=tk.NORMAL)
+        import_contacts_csv_button.config(state=tk.NORMAL)
+        import_tfn_phone_no_xlsx_button.config(state=tk.NORMAL)
+    if state == "DISABLED":
+        import_credentials_json_button.config(state=tk.DISABLED)
+        import_credentials_xlsx_button.config(state=tk.DISABLED)
+        import_subject_xlsx_button.config(state=tk.DISABLED)
+        import_from_name_xlsx_button.config(state=tk.DISABLED)
+        import_body_xlsx_button.config(state=tk.DISABLED)
+        import_contacts_csv_button.config(state=tk.DISABLED)
+        import_tfn_phone_no_xlsx_button.config(state=tk.DISABLED)
+
 def send_data():
     if send_button.cget("text") == "Send":
+        en_dis_unnec_buttons("DISABLED")
         send_button.config(text="Sending", fg="green")
         console_output.insert(tk.END, "Sending...\n")
+        console_output.update()
         print("Data sent!")
         # Add additional logic if needed
     else:
+        en_dis_unnec_buttons("NORMAL")
         send_button.config(text="Send", fg="red")
         console_output.insert(tk.END, "Sending stopped.\n")
-
+        console_output.update()
+        
 # Create the main window
 window = tk.Tk()
 window.title("Gmail-API-X Email Sender")
@@ -100,26 +122,26 @@ style.theme_use("winnative")
 #style.theme_use("xpnative")
 
 # Create and pack buttons using grid with padding set to 0
-import_content_html_button = tk.Button(window, text="Import_Credentials.JSON", command=import_credentials_json)
-import_content_html_button.grid(row=0, column=0, padx=0, pady=0)
+import_credentials_json_button = tk.Button(window, text="Import_Credentials.JSON", command=import_credentials_json)
+import_credentials_json_button.grid(row=0, column=0, padx=0, pady=0)
 
-import_content_html_button = tk.Button(window, text="Import_Credentials.XLSX", command=import_credentials_xlsx)
-import_content_html_button.grid(row=0, column=1, padx=0, pady=0)
+import_credentials_xlsx_button = tk.Button(window, text="Import_Credentials.XLSX", command=import_credentials_xlsx)
+import_credentials_xlsx_button.grid(row=0, column=1, padx=0, pady=0)
 
-import_content_html_button = tk.Button(window, text="Import_Subject.XLSX", command=import_subject_xlsx)
-import_content_html_button.grid(row=0, column=2, padx=0, pady=0)
+import_subject_xlsx_button = tk.Button(window, text="Import_Subject.XLSX", command=import_subject_xlsx)
+import_subject_xlsx_button.grid(row=0, column=2, padx=0, pady=0)
 
-import_content_html_button = tk.Button(window, text="Import_FromName.XLSX", command=import_from_name_xlsx)
-import_content_html_button.grid(row=0, column=3, padx=0, pady=0)
+import_from_name_xlsx_button = tk.Button(window, text="Import_FromName.XLSX", command=import_from_name_xlsx)
+import_from_name_xlsx_button.grid(row=0, column=3, padx=0, pady=0)
 
-import_content_html_button = tk.Button(window, text="Import_Body.XLSX", command=import_body_xlsx)
-import_content_html_button.grid(row=0, column=4, padx=0, pady=0)
+import_body_xlsx_button = tk.Button(window, text="Import_Body.XLSX", command=import_body_xlsx)
+import_body_xlsx_button.grid(row=0, column=4, padx=0, pady=0)
 
-import_content_html_button = tk.Button(window, text="Import_Contacts.CSV", command=import_contacts_csv)
-import_content_html_button.grid(row=0, column=5, padx=0, pady=0)
+import_contacts_csv_button = tk.Button(window, text="Import_Contacts.CSV", command=import_contacts_csv)
+import_contacts_csv_button.grid(row=0, column=5, padx=0, pady=0)
 
-import_content_html_button = tk.Button(window, text="Import_TFN_PHONE_NO.XLSX", command=import_tfn_phone_no_xlsx)
-import_content_html_button.grid(row=0, column=6, padx=0, pady=0)
+import_tfn_phone_no_xlsx_button = tk.Button(window, text="Import_TFN_PHONE_NO.XLSX", command=import_tfn_phone_no_xlsx)
+import_tfn_phone_no_xlsx_button.grid(row=0, column=6, padx=0, pady=0)
 
 import_content_html_button = tk.Button(window, text="Import_Content_HTML", command=import_content_html)
 import_content_html_button.grid(row=0, column=7, padx=0, pady=0)
