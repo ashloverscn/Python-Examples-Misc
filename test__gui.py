@@ -6,30 +6,25 @@ from tkinter import filedialog
 from tkinter.scrolledtext import ScrolledText
 
 def import_credentials_json():
-    if directory_path:
-        console_output.insert(tk.END, f"Import_Credentials.JSON from directory: {directory_path}")
-
-        # Call the import_credentials function with the selected directory path
-        import_credentials(directory_path)
-
-def import_credentials(directory_path):
-    # Ensure the output directory exists
-    os.makedirs('./credentials', exist_ok=True)
-
-    # Iterate through all files in the selected directory with the .json extension
-    for filename in os.listdir(directory_path):
-        if filename.endswith(".json"):
-            file_path = os.path.join(directory_path, filename)
-
-            # Read the contents of the selected file in binary mode
-            with open(file_path, 'rb') as file:
-                binary_data = file.read()
-
-            # Write the binary contents to the ./credentials/ directory
-            output_file_path = os.path.join(f'./credentials/', filename)
-            with open(output_file_path, 'wb') as output_file:
-                output_file.write(binary_data)
-                console_output.insert(tk.END, f"File successfully written as binary to {output_file_path}")
+    current_working_directory = os.getcwd().replace("\\", "/")
+    json_directory_path = filedialog.askdirectory(title="Select JSON File's Directory")
+    json_count = 0
+    if json_directory_path:
+        console_output.insert(tk.END, f"Importing Credential JSON from directory: {json_directory_path}\n")
+        json_files_list = [f for f in os.listdir(json_directory_path) if f.endswith('.json')]
+        for json_file in json_files_list:
+            console_output.insert(tk.END, f"{json_file}\n")
+        for filename in os.listdir(json_directory_path):
+            if filename.endswith(".json"):
+                json_file_path = os.path.join(json_directory_path, filename)
+                with open(json_file_path, 'rb') as json_file:
+                    json_file_binary_data = json_file.read()
+                os.makedirs('./credentials', exist_ok=True)
+                json_file_output_path = os.path.join(f'./credentials/', filename)
+                with open(json_file_output_path, 'wb') as output_json_file:
+                    output_json_file.write(json_file_binary_data)
+                    json_count = json_count + 1
+        console_output.insert(tk.END, f"{json_count} Credential JSON Files Imported to: {current_working_directory}/credentials\n")
 
 def import_credentials_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
