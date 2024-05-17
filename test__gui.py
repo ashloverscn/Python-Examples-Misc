@@ -10,7 +10,7 @@ def import_credentials_json():
     json_directory_path = filedialog.askdirectory(title="Select JSON File's Directory")
     json_count = 0
     if json_directory_path:
-        console_output.insert(tk.END, f"Importing Credential JSON from directory: {json_directory_path}\n")
+        console_output.insert(tk.END, f"Importing Credential JSON Files from directory: {json_directory_path}\n")
         json_files_list = [f for f in os.listdir(json_directory_path) if f.endswith('.json')]
         for json_file in json_files_list:
             console_output.insert(tk.END, f"{json_file}\n")
