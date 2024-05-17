@@ -29,37 +29,37 @@ def import_credentials_json():
 def import_credentials_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_output.insert(tk.END, f"Import_Credentials.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_Credentials.XLSX: {file_path}\n")
 
 def import_subject_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_output.insert(tk.END, f"Import_Subject.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_Subject.XLSX: {file_path}\n")
 
 def import_from_name_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_output.insert(tk.END, f"Import_FromName.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_FromName.XLSX: {file_path}\n")
 
 def import_body_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_output.insert(tk.END, f"Import_Body.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_Body.XLSX: {file_path}\n")
 
 def import_contacts_csv():
     file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
     if file_path:
-        console_output.insert(tk.END, f"Import_Contacts.CSV: {file_path}")
+        console_output.insert(tk.END, f"Import_Contacts.CSV: {file_path}\n")
 
 def import_tfn_phone_no_xlsx():
     file_path = filedialog.askopenfilename(filetypes=[("XLSX files", "*.xlsx")])
     if file_path:
-        console_output.insert(tk.END, f"Import_TFN_PHONE_NO.XLSX: {file_path}")
+        console_output.insert(tk.END, f"Import_TFN_PHONE_NO.XLSX: {file_path}\n")
 
 def import_content_html():
     file_path = filedialog.askopenfilename(filetypes=[("HTML files", "*.html")])
     if file_path:
-        console_output.insert(tk.END, f"Import_Content_HTML: {file_path}")
+        console_output.insert(tk.END, f"Import_Content_HTML: {file_path}\n")
 
 def en_dis_unnec_buttons(state):
     if state == "NORMAL":
