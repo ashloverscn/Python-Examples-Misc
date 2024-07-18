@@ -22,5 +22,3 @@ df = pd.read_excel(input_file_xlsx, usecols=[0, 1, 2, 3], nrows=250)
 df.to_csv(output_file_csv, index=False)
 # Write to contacts1.xlsx
 df.to_excel(output_file_xlsx, index=False)
-
-
