@@ -22,16 +22,20 @@ except Exception as e:
     print(f"Error occurred while reading '{file_path}': {str(e)}")
     exit(1)
 
-# Initialize an empty dictionary to store counts for each column
-column_valid_counts = {}
+# Initialize an empty list to store (column_name, max_valid_count) tuples
+column_valid_counts = []
 
 # Iterate through each column in the DataFrame
 for column in df.columns:
     # Apply the count_valid_emails function to each element in the column
-    column_valid_counts[column] = df[column].apply(lambda x: count_valid_emails(str(x))).sum()
+    valid_count = df[column].apply(lambda x: count_valid_emails(str(x))).sum()
+    # Append (column_name, max_valid_count) tuple to the list
+    column_valid_counts.append((column, valid_count))
 
 # Find the column with the maximum number of valid email addresses
-max_column = max(column_valid_counts, key=column_valid_counts.get)
-max_valid_count = column_valid_counts[max_column]
+max_column = max(column_valid_counts, key=lambda x: x[1])
 
-print(f"The column '{max_column}' has the maximum number of valid email addresses: {max_valid_count}")
+# Extract the row number (index) of the maximum count
+max_row_index = column_valid_counts.index(max_column)
+
+print(f"The row number '{max_row_index + 1}' has the maximum number of valid email addresses: {max_column[1]}")
