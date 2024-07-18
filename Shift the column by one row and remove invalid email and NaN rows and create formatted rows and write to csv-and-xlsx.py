@@ -22,4 +22,9 @@ df.insert(df.columns.get_loc('repeat') + 1, 'sent', '')
 csv_file = 'contacts.csv'
 df.to_csv(csv_file, index=False)
 
+# Write data to XLSX file
+xlsx_file = 'contacts.xlsx'
+df.to_excel(xlsx_file, index=False)
+
 print(f'Data successfully written to {csv_file}.')
+print(f'Data successfully written to {xlsx_file}.')
