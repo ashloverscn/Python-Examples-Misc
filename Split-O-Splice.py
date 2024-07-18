@@ -23,7 +23,7 @@ def is_valid_email(email):
 
 df = df[df['email'].apply(is_valid_email)]
 
-print(f'All invalid email-addresse and that is not an email-address have been removed from {data_xlsx_file}.')
+print(f'All invalid email-address and that is not an email-address have been removed from {data_xlsx_file}.')
 
 # Write data to data xlsx file
 #df.to_excel(data_xlsx_file, index=False)
