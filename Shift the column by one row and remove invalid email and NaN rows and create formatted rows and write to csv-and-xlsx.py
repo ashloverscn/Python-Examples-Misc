@@ -1,8 +1,35 @@
 import pandas as pd
+import re
 
 # Read data from Excel file
-excel_file = 'data.xlsx'
-df = pd.read_excel(excel_file)
+data_xlsx_file = 'data.xlsx'
+df = pd.read_excel(data_xlsx_file)
+
+# Shift the rows down by one time
+df = df.shift(periods=1)
+
+# Insert the header "email" to the first column
+df.columns = ['email'] + list(df.columns[1:])
+
+# Remove rows with NaN values
+df.dropna(inplace=True)
+
+# Remove rows with invalid email addresses
+def is_valid_email(email):
+    if pd.isnull(email):
+        return False
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return bool(re.match(pattern, email))
+
+df = df[df['email'].apply(is_valid_email)]
+
+print(f'All invalid email-addresse and that is not an email-address have been removed from {data_xlsx_file}.')
+
+# Write data to data xlsx file
+data_xlsx_file = 'data.xlsx'
+df.to_excel(data_xlsx_file, index=False)
+
+print(f'Data successfully written back to {data_xlsx_file}.')
 
 # Ensure "email" column is present
 if 'email' not in df.columns:
