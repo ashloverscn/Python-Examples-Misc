@@ -1,66 +1,61 @@
 import pandas as pd
 import re
 
-# Function to count valid email addresses in a given text
-def count_valid_emails(text):
-    # Regular expression for matching email addresses
-    pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    # Find all matches
-    emails = re.findall(pattern, text)
-    # Return the count of valid email addresses
-    return len(emails)
+# Read data from Excel file
+data_xlsx_file = 'data.xlsx'
+df = pd.read_excel(data_xlsx_file)
 
-# Load the Data Excel file Display the original DataFrame
-data_xlsx = 'data.xlsx'
+# Shift the rows down by one time
+df = df.shift(periods=1)
 
-try:
-    df = pd.read_excel(data_xlsx)
-    print("Original DataFrame:")
-    print(df)
+# Insert the header "email" to the first column
+df.columns = ['email'] + list(df.columns[1:])
 
-except FileNotFoundError:
-    print(f"Error: File '{data_xlsx}' not found.")
-    exit(1)
-except Exception as e:
-    print(f"Error occurred while reading '{data_xlsx}': {str(e)}")
-    exit(1)
+# Remove rows with NaN values
+df.dropna(inplace=True)
 
-# Initialize an empty list to store (column_name, max_valid_count) tuples
-column_valid_counts = []
+# Remove rows with invalid email addresses
+def is_valid_email(email):
+    if pd.isnull(email):
+        return False
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return bool(re.match(pattern, email))
 
-# Iterate through each column in the DataFrame
-for column in df.columns:
-    # Apply the count_valid_emails function to each element in the column
-    valid_count = df[column].apply(lambda x: count_valid_emails(str(x))).sum()
-    # Append (column_name, max_valid_count) tuple to the list
-    column_valid_counts.append((column, valid_count))
+df = df[df['email'].apply(is_valid_email)]
 
-# Find the column with the maximum number of valid email addresses
-max_column = max(column_valid_counts, key=lambda x: x[1])
+print(f'All invalid email-addresse and that is not an email-address have been removed from {data_xlsx_file}.')
 
-# Extract the row number (index) of the maximum count
-max_row_index = column_valid_counts.index(max_column)
+# Write data to data xlsx file
+#df.to_excel(data_xlsx_file, index=False)
 
-print(f"The row number '{max_row_index + 1}' has the maximum number of valid email addresses: {max_column[1]}")
+#print(f'Data successfully written back to {data_xlsx_file}.')
 
-### Shift the rows down by one time
-##shifted_df = df.shift(periods=1)
-##
-### Insert the header "email" to the first column
-##shifted_df.columns = ['email'] + list(shifted_df.columns[1:])
-##
-### Remove rows with NaN values
-##shifted_df.dropna(inplace=True)
-##
-### Remove rows with invalid email addresses
-##def is_valid_email(email):
-##    if pd.isnull(email):
-##        return False
-##    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-##    return bool(re.match(pattern, email))
-##
-##shifted_df = shifted_df[shifted_df['email'].apply(is_valid_email)]
-##
-### Write the cleaned DataFrame back to the original Excel file
-##shifted_df.to_excel(data_xlsx, index=False)
-##
+# Ensure "email" column is present
+if 'email' not in df.columns:
+    raise ValueError('"email" column is missing in the Excel file.')
+
+# Ensure "name" column is present and fill with "Customer" if missing
+if 'name' not in df.columns:
+    df.insert(0, 'name', 'Customer')
+
+# Add a new column "repeat" filled with 1 after the "email" column
+df.insert(df.columns.get_loc('email') + 1, 'repeat', 1)
+
+# Add an empty column "sent" after the "repeat" column
+df.insert(df.columns.get_loc('repeat') + 1, 'sent', '')
+
+# Write data to CSV file
+#csv_file = 'contacts.csv'
+#df.to_csv(csv_file, index=False)
+
+# Write data to XLSX file
+#xlsx_file = 'contacts.xlsx'
+#df.to_excel(xlsx_file, index=False)
+
+#print(f'Data successfully written to {csv_file}.')
+#print(f'Data successfully written to {xlsx_file}.')
+
+# Write formated data back to XLSX file
+df.to_excel(data_xlsx_file, index=False)
+print(f'Data successfully formated and written back to {data_xlsx_file}.')
+
