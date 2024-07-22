@@ -1,6 +1,31 @@
 import pandas as pd
 import re
 
+config_data_file = 'Split-O-Splice.config'
+
+def read_config_file(filename):
+    config = {}
+    with open(filename, 'r') as f:
+        for line in f:
+            # Ignore comments and empty lines
+            if line.strip() and not line.strip().startswith('#'):
+                key, value = line.strip().split('=')
+                config[key.strip()] = value.strip()
+    return config
+
+# Reading variables from the config dictionary
+config = read_config_file(config_data_file)
+max_directory = config.get('max_directory') # data-division or interger-number
+chunk_size = int(config.get('chunk_size')) # interger-number
+chunk_stamp = config.get('chunk_stamp') # colour-yellow or delete-rows-on-finish
+test_interval = int(config.get('test_interval')) # interger-number
+
+# Example usage: printing out the variables
+print("max_directory:", max_directory)
+print("chunk_size:", chunk_size)
+print("chunk_stamp:", chunk_stamp)
+print("test_interval:", test_interval)
+
 # Read data from Excel file
 data_xlsx_file = 'data.xlsx'
 df = pd.read_excel(data_xlsx_file)
