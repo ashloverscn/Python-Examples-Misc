@@ -20,15 +20,22 @@ chunk_size = int(config.get('chunk_size')) # interger-number
 chunk_stamp = config.get('chunk_stamp') # colour-yellow or delete-rows-on-finish
 test_interval = int(config.get('test_interval')) # interger-number
 
-# Example usage: printing out the variables
+# Read data from Excel file
+data_xlsx_file = 'data.xlsx'
+df = pd.read_excel(data_xlsx_file)
+
+# Count the number of valid data rows (assuming any non-null row is valid)
+data_rows_valid = df.dropna().shape[0]
+# Calculate max_directory based on valid data rows
+if max_directory  == "data-division":
+    if data_rows_valid > 0:
+        max_directory = data_rows_valid // chunk_size
+        
+# Printing out the variables
 print("max_directory:", max_directory)
 print("chunk_size:", chunk_size)
 print("chunk_stamp:", chunk_stamp)
 print("test_interval:", test_interval)
-
-# Read data from Excel file
-data_xlsx_file = 'data.xlsx'
-df = pd.read_excel(data_xlsx_file)
 
 # Shift the rows down by one time
 df = df.shift(periods=1)
@@ -83,4 +90,3 @@ df.insert(df.columns.get_loc('repeat') + 1, 'sent', '')
 # Write formated data back to XLSX file
 df.to_excel(data_xlsx_file, index=False)
 print(f'Data successfully formated and written back to {data_xlsx_file}.')
-
