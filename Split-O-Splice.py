@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import re
 
@@ -30,12 +31,24 @@ data_rows_valid = df.dropna().shape[0]
 if max_directory  == "data-division":
     if data_rows_valid > 0:
         max_directory = data_rows_valid // chunk_size
+        if data_rows_valid % chunk_size != 0:
+            max_directory = max_directory +1
         
 # Printing out the variables
 print("max_directory:", max_directory)
 print("chunk_size:", chunk_size)
 print("chunk_stamp:", chunk_stamp)
 print("test_interval:", test_interval)
+
+def create_directories(n):
+    # Loop from 1 to n (inclusive)
+    for i in range(1, n + 1):
+        # Create directory with name as the number
+        directory_name = str(i)
+        os.makedirs(directory_name, exist_ok=True)
+        print(f"Directory '{directory_name}' created.")
+
+create_directories(max_directory)
 
 # Shift the rows down by one time
 df = df.shift(periods=1)
