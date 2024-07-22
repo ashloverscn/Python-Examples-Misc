@@ -21,3 +21,4 @@ if max_directory  == "data-division":
 # Display the results
 print(f"Number of valid data rows: {data_rows_valid}")
 print(f"max_directory: {max_directory}")
+input("Press Enter to exit...")
