@@ -86,7 +86,7 @@ if max_directory  == "data-division":
     if data_rows_valid > 0:
         max_directory = data_rows_valid // chunk_size
         if data_rows_valid % chunk_size != 0:
-            max_directory = max_directory +1
+            max_directory = max_directory + 1
         
 # Printing out the variables
 print("valid_data_rows:", data_rows_valid)
@@ -106,4 +106,3 @@ def create_directories(n):
 create_directories(max_directory)
 
 input("Press any Key to Exit")
-
