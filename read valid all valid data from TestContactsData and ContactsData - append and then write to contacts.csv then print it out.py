@@ -1,12 +1,14 @@
 import pandas as pd
 
-# fix the header for test contacts data and contacts data before it wil be raw format
 # Read test data from Excel file
 test_contacts_data_xlsx_file = 'TestContactsData.xlsx'
 TestContactsData = pd.read_excel(test_contacts_data_xlsx_file, usecols=['name', 'email', 'repeat', 'sent'])
 # Read contacts data from Excel file
 contacts_data_xlsx_file = 'ContactsData.xlsx'
 ContactsData = pd.read_excel(contacts_data_xlsx_file, usecols=['name', 'email', 'repeat', 'sent'])
+# fill NaN values with empty String
+TestContactsData.fillna('', inplace=True)
+ContactsData.fillna('', inplace=True)
 # Find the number of valid rows in both 
 test_contacts_data_rows_valid = TestContactsData.dropna().shape[0]
 contacts_data_rows_valid = ContactsData.dropna().shape[0]
@@ -29,16 +31,15 @@ ContactsDataFrame = pd.concat([ContactsDataFrame, TestContactsData], ignore_inde
 ContactsDataFrame = pd.concat([ContactsDataFrame, ContactsData.head(chunk_size)], ignore_index=True)
 
 # Write ContactsDataFrame to a CSV file
-ContactsDataFrame.to_csv('contacts.csv', index=False)
+ContactsDataFrame.to_csv('contacts.csv', index=False, na_rep='')
 # Print confirmation
 print("ContactsDataFrame has been written to 'contacts.csv'")
 # Print the DataFrame
-#print(ContactsDataFrame)
+print(ContactsDataFrame)
 
-# Open and read the UTF-8 encoded text file
-with open('contacts.csv', 'r', encoding='utf-8') as file:
+# Open and read the UTF-8 encoded contacts.csv text file
+with open('contacts.csv', 'r', encoding='utf-8') as contacts_csv:
     # Read the file contents
-    file_contents = file.read()
-
+    contacts = contacts_csv.read()
 # Print the file contents
-print(file_contents)
+print(contacts)
