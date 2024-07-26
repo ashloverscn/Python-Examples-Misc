@@ -61,17 +61,6 @@ ContactsData.insert(ContactsData.columns.get_loc('email') + 1, 'repeat', 1)
 TestContactsData.insert(TestContactsData.columns.get_loc('repeat') + 1, 'sent', '')
 ContactsData.insert(ContactsData.columns.get_loc('repeat') + 1, 'sent', '')
 
-# Write data to CSV file
-#csv_file = 'contacts.csv'
-#ContactsData.to_csv(csv_file, index=False)
-
-# Write data to XLSX file
-#xlsx_file = 'contacts.xlsx'
-#ContactsData.to_excel(xlsx_file, index=False)
-
-#print(f'Data successfully written to {csv_file}.')
-#print(f'Data successfully written to {xlsx_file}.')
-
 # Write formated data back to XLSX file
 TestContactsData.to_excel(test_contacts_data_xlsx_file, index=False)
 print(f'TestContactsData successfully formated and written back to {test_contacts_data_xlsx_file}.')
