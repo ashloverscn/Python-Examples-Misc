@@ -9,6 +9,9 @@ def run_exe(exe_path):
     try:
         if os.access(exe_path, os.X_OK):
             subprocess.run([exe_path], cwd='./', check=True)
+            #subprocess.run([exe_path], cwd='./', check=True, capture_output=True, text=True)
+            #print("Output:", result.stdout)
+            #print("Error:", result.stderr)
             print(f"Gmail-API-X.exe Started Successfully")
             #print(f"Successfully ran {exe_path}")
         else:
@@ -32,7 +35,7 @@ def main():
         #print(f"Executable Not found at: {exe_path}")
    
     #print(f"Final executable path: {exe_path}")
-    os.system("pause")
+    #os.system("pause")
     
 if __name__ == "__main__":
     main()
