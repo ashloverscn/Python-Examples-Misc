@@ -53,6 +53,7 @@ def create_message(sender, to, subject, body, image_path):
     with open(image_path, 'rb') as image_file:
         img_data = image_file.read()
         encoded_img = base64.b64encode(img_data).decode('utf-8')
+        #encoded_img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/9lD1+gAAAAASUVORK5CYII="
     
     image = MIMEImage(img_data, _subtype='png')
     image.add_header('Content-ID', '<image1>')
