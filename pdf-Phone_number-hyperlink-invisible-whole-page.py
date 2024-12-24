@@ -32,7 +32,7 @@ def stamp(original_path: str, stamp_path: str, out_path: str) -> None:
 if __name__ == "__main__":
     print(f"pypdf=={pypdf.__version__}")
     print(f"fpdf2=={fpdf.__version__}")
-    stamp_path = "stamp.pdf"
+    stamp_path = "test_stamp.pdf"
     phone_number = "+1234567890"  # Specify the phone number
     generate_overlay(stamp_path, phone_number)  # Invisible clickable phone number link
-    stamp(stamp_path, "GeoTopo.pdf", "out.pdf")
+    stamp(stamp_path, "test_src.pdf", "test_out.pdf")
