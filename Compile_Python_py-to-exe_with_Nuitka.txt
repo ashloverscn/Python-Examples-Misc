@@ -1,0 +1,54 @@
+#https://stackoverflow.com/questions/40504552/how-to-install-visual-c-build-tools
+#https://python.plainenglish.io/how-python-code-in-an-exe-file-can-be-decompiled-and-what-you-can-do-about-it-b3a6bb574627
+#install MSVC Build Tools CMake Tools For Compiling with Nuitka 
+
+winget search VisualStudio
+
+#On Windows 10 SDK
+winget install Microsoft.VisualStudio.2022.BuildTools --force --override "--wait --passive --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows10SDK"
+
+#On Windows 11 SDK
+winget install Microsoft.VisualStudio.2022.BuildTools --force --override "--wait --passive --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows11SDK.22621"
+
+#Visual Studio 2017 Build Tools: https://aka.ms/vs/15/release/vs_buildtools.exe
+#Visual Studio 2019 Build Tools: https://aka.ms/vs/16/release/vs_buildtools.exe
+#Visual Studio 2022 Build Tools: https://aka.ms/vs/17/release/vs_buildtools.exe
+
+#may not be necessary
+winget install --id Microsoft.VisualStudio.2022.CMakeTools
+
+winget install cmake
+
+cmake --version
+
+pip install nuitka
+
+#the command might not work ans is not important 
+cl
+
+#install python version 3.12 (3.13 Latest was not working at this point in time)
+
+#the specific version of google-api-python-client==1.8.0 works with Nuitka and my app needs it 
+
+pip install google-api-python-client==1.8.0
+
+nuitka --standalone --onefile Gmail-API-X.py
+
+nuitka --enable-plugin=tk-inter --standalone --onefile Gmail-API-X.py
+
+nuitka --standalone --mingw64 Gmail-API-X.py
+
+nuitka --standalone --onefile --mingw64 Gmail-API-X.py
+
+
+#if needed to set path to env 
+setx PATH "%PATH%;C:\Path\to\MSVC\bin"
+
+#rename build dist directory to Gmail-API-X
+
+pyinstaller --clean --onefile --add-data "Gmail-API-X;Gmail-API-X" .\run.py
+
+pyinstaller --clean --onefile --add-data "Gmail-API-X/*;MIEPASS/Gmail-API-X" .\run.py
+
+pip install google-api-python-client==1.8.0
+
