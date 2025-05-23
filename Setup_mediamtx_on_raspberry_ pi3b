@@ -1,5 +1,7 @@
 # Setup mediamtx on raspberry pi 3b +
-
+https://james-batchelor.com/index.php/2023/11/10/install-mediamtx-on-raspbian-bookworm/
+https://github.com/bluenviron/mediamtx
+https://snapcraft.io/install/mediamtx/raspbian
 # unit file 
 [Unit]
 Description=MediaMTX RTSP Server
