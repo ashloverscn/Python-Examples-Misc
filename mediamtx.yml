@@ -2,19 +2,14 @@ logLevel: info
 logDestinations: [stdout]
 logFile: mediamtx.log
 sysLogPrefix: mediamtx
-
 readTimeout: 10s
 writeTimeout: 10s
 writeQueueSize: 512
 udpMaxPayloadSize: 1472
-
 runOnConnect:
 runOnConnectRestart: no
 runOnDisconnect:
-
-
 authMethod: internal
-
 authInternalUsers:
 - user: any
   pass:
@@ -26,7 +21,6 @@ authInternalUsers:
     path:
   - action: playback
     path:
-
 - user: any
   pass:
   ips: ['127.0.0.1', '::1']
@@ -34,17 +28,13 @@ authInternalUsers:
   - action: api
   - action: metrics
   - action: pprof
-
 authHTTPAddress:
 authHTTPExclude:
 - action: api
 - action: metrics
 - action: pprof
-
 authJWTJWKS:
 authJWTClaimKey: mediamtx_permissions
-
-
 api: no
 apiAddress: :9997
 apiEncryption: no
@@ -52,8 +42,6 @@ apiServerKey: server.key
 apiServerCert: server.crt
 apiAllowOrigin: '*'
 apiTrustedProxies: []
-
-
 metrics: no
 metricsAddress: :9998
 metricsEncryption: no
@@ -61,8 +49,6 @@ metricsServerKey: server.key
 metricsServerCert: server.crt
 metricsAllowOrigin: '*'
 metricsTrustedProxies: []
-
-
 pprof: no
 pprofAddress: :9999
 pprofEncryption: no
@@ -70,8 +56,6 @@ pprofServerKey: server.key
 pprofServerCert: server.crt
 pprofAllowOrigin: '*'
 pprofTrustedProxies: []
-
-
 playback: no
 playbackAddress: :9996
 playbackEncryption: no
@@ -79,8 +63,6 @@ playbackServerKey: server.key
 playbackServerCert: server.crt
 playbackAllowOrigin: '*'
 playbackTrustedProxies: []
-
-
 rtsp: yes
 rtspTransports: [udp, multicast, tcp]
 rtspEncryption: "no"
@@ -94,16 +76,12 @@ multicastRTCPPort: 8003
 rtspServerKey: server.key
 rtspServerCert: server.crt
 rtspAuthMethods: [basic]
-
-
 rtmp: yes
 rtmpAddress: :1935
 rtmpEncryption: "no"
 rtmpsAddress: :1936
 rtmpServerKey: server.key
 rtmpServerCert: server.crt
-
-
 hls: yes
 hlsAddress: :8888
 hlsEncryption: no
@@ -119,8 +97,6 @@ hlsPartDuration: 200ms
 hlsSegmentMaxSize: 50M
 hlsDirectory: ''
 hlsMuxerCloseAfter: 60s
-
-
 webrtc: yes
 webrtcAddress: :8889
 webrtcEncryption: no
@@ -137,15 +113,9 @@ webrtcICEServers2: []
 webrtcHandshakeTimeout: 10s
 webrtcTrackGatherTimeout: 2s
 webrtcSTUNGatherTimeout: 5s
-
-
 srt: yes
 srtAddress: :8890
-
-
 pathDefaults:
-
-
   source: publisher
   sourceFingerprint:
   sourceOnDemand: no
@@ -155,29 +125,19 @@ pathDefaults:
   srtReadPassphrase:
   fallback:
   useAbsoluteTimestamp: false
-
-
   record: no
   recordPath: ./recordings/%path/%Y-%m-%d_%H-%M-%S-%f
   recordFormat: fmp4
   recordPartDuration: 1s
   recordSegmentDuration: 1h
   recordDeleteAfter: 1d
-
-
   overridePublisher: yes
   srtPublishPassphrase:
-
-
   rtspTransport: automatic
   rtspAnyPort: no
   rtspRangeType:
   rtspRangeStart:
-
-
   sourceRedirect:
-
-
   rpiCameraCamID: 0
   rpiCameraSecondary: false
   rpiCameraWidth: 1920
@@ -215,33 +175,23 @@ pathDefaults:
   rpiCameraProfile: main
   rpiCameraLevel: '4.1'
   rpiCameraJPEGQuality: 60
-
-
   runOnInit:
   runOnInitRestart: no
-
   runOnDemand:
   runOnDemandRestart: no
   runOnDemandStartTimeout: 10s
   runOnDemandCloseAfter: 10s
   runOnUnDemand:
-
   runOnReady:
   runOnReadyRestart: no
   runOnNotReady:
-
   runOnRead:
   runOnReadRestart: no
   runOnUnread:
-
   runOnRecordSegmentCreate:
-
   runOnRecordSegmentComplete:
-
-
 paths:
   cam:
    source: rpiCamera
    sourceOnDemand: yes
   all_others:
-
