@@ -1,0 +1,52 @@
+# Setup mediamtx on raspberry pi 3b +
+
+# unit file 
+[Unit]
+Description=MediaMTX RTSP Server
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/mediamtx /opt/mediamtx.yml
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+
+#
+# configuration dir for /opt/mediamtx.yml
+
+sudo apt install ffmpeg -y
+
+# Stream a test Signal 
+ffmpeg -re -f lavfi -i testsrc=size=640x480:rate=30 \
+       -vcodec libx264 -preset veryfast -tune zerolatency \
+       -f rtsp rtsp://localhost:8554/teststream
+
+# Stream raspi cam
+# 640 x 480
+libcamera-vid -t 0 --inline --framerate 30 --width 640 --height 480 -o - | \
+ffmpeg -re -f h264 -i - \
+    -vcodec copy \
+    -f rtsp rtsp://localhost:8554/teststream
+
+# 1280 x 720
+libcamera-vid -t 0 --inline --framerate 30 --width 1280 --height 720 -o - | \
+ffmpeg -re -f h264 -i - \
+    -vcodec copy \
+    -f rtsp rtsp://localhost:8554/teststream
+
+
+#
+# Great! MediaMTX is now running successfully on your Raspberry Pi 3B with all major streaming protocols enabled:
+
+# RTSP: rtsp://<pi-ip>:8554/
+
+# RTMP: rtmp://<pi-ip>:1935/
+
+# HLS: http://<pi-ip>:8888/
+
+# WebRTC: http://<pi-ip>:8889/
+
+# SRT: srt://<pi-ip>:8890
+
