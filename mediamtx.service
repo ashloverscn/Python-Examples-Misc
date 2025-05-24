@@ -3,7 +3,7 @@ Description=MediaMTX RTSP Server
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/mediamtx /opt/mediamtx.yml
+ExecStart=/usr/local/bin/mediamtx /opt/mediamtx/mediamtx.yml
 Restart=always
 User=pi
 
