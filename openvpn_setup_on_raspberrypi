@@ -3,7 +3,7 @@ sudo apt update && sudo apt install openvpn # (Ubuntu and Debian)
 sudo dnf install openvpn     # (Fedora)
 sudo zypper install openvpn  # (openSUSE)
 
-# copy config files to the location
+# copy config files to the location (this ovpn file iS from portmap.io)
 sudo mkdir -p /etc/openvpn/server
 sudo mkdir -p /etc/openvpn/client
 sudo cp ~/ash-temp-new.serrver.ovpn /etc/openvpn/client/ash-temp-new.serrver.ovpn.conf
