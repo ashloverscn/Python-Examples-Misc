@@ -53,15 +53,6 @@ paths:
       -c copy -f rtsp rtsp://localhost:8554/camera
     runOnInitRestart: yes
 
-# read and write the stream with wait untill feed available
-paths:
-  camera:
-    source: publisher
-    runOnInit: >
-      bash -c 'until ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@raspberrypi:5543/live/channel0
-      -c copy -f rtsp rtsp://localhost:8554/camera; do echo "Retrying..."; sleep 5; done'
-    runOnInitRestart: no
-
 # all parallal channels
 # Great! MediaMTX is now running successfully on your Raspberry Pi 3B with all major streaming protocols enabled:
 
