@@ -59,6 +59,8 @@ ffmpeg -f dshow -i video="Integrated Webcam" -vcodec libx264 -f rtsp rtsp://rasp
 ffmpeg -f dshow -rtbufsize 128M -i video="Integrated Webcam" -vcodec libx264 -preset veryfast -tune zerolatency -pix_fmt yuv420p -profile:v baseline -level 3.0 -f rtsp rtsp://raspberrypi-lan:8554/webcam
 # if the codec is laggy
 ffmpeg -f dshow -framerate 30 -video_size 640x480 -rtbufsize 128M -i video="Integrated Webcam" -vcodec libx264 -preset ultrafast -tune zerolatency -x264-params keyint=30:min-keyint=30:scenecut=0 -g 30 -pix_fmt yuv420p -profile:v baseline -level 3.0 -f rtsp rtsp://raspberrypi-lan:8554/webcam
+# feel free to broadcast a test signal :P
+ffmpeg -re -f lavfi -i testsrc=size=640x480:rate=30 -vcodec libx264 -preset ultrafast -tune zerolatency -x264-params keyint=30:min-keyint=30:scenecut=0 -g 30 -pix_fmt yuv420p -profile:v baseline -level 3.0 -f rtsp rtsp://raspberrypi-lan:8554/webcam
 
 # read and write the stream at Startup using mediamtx.yml file
 paths:
