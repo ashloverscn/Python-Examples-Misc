@@ -44,8 +44,12 @@ ffmpeg -re -f h264 -i - \
 
 # read a Stream from url and write back the Stream to localhost mediamtx Server on a publish topic 
 # (any topic you set becomes equally available on all the channels parallaly of the mediamtx Server)
+
 # reading from remote camera and writing Stream to localhost mediamtx Server
 ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@192.168.29.141:5543/live/channel0 -c copy -f rtsp rtsp://localhost:8554/camera
+
+# Stream windowS desktop to mediamtx Server
+ffmpeg -f gdigrab -framerate 25 -i desktop -vcodec libx264 -preset ultrafast -tune zerolatency -pix_fmt yuv420p -f rtsp rtsp://raspberrypi:8554/ashpc
 
 # read and write the stream at Startup using mediamtx.yml file
 paths:
