@@ -3,6 +3,9 @@ https://james-batchelor.com/index.php/2023/11/10/install-mediamtx-on-raspbian-bo
 https://github.com/bluenviron/mediamtx
 https://snapcraft.io/install/mediamtx/raspbian
 
+# increse gpu memory slightly to avoid from getting stuck
+sudo sed -i 's/^gpu_mem=.*/gpu_mem=256/' /boot/config.txt
+
 # unit file 
 [Unit]
 Description=MediaMTX RTSP Server
