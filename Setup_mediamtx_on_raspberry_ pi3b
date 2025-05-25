@@ -56,7 +56,7 @@ ffmpeg -list_devices true -f dshow -i dummy
 # Stream windowS webcam to mediamtx Server
 ffmpeg -f dshow -i video="Integrated Webcam" -vcodec libx264 -f rtsp rtsp://raspberrypi-lan:8554/webcam
 # if RealTime Buffer is overflowing 
-ffmpeg -f dshow -rtbufsize 84M -i video="Integrated Webcam" -vcodec libx264 -preset ultrafast -tune zerolatency -f rtsp rtsp://raspberrypi-lan:8554/webcam
+ffmpeg -f dshow -rtbufsize 184M -i video="Integrated Webcam" -vcodec libx264 -preset ultrafast -tune zerolatency -f rtsp rtsp://raspberrypi-lan:8554/webcam
 
 # read and write the stream at Startup using mediamtx.yml file
 paths:
