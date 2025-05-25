@@ -42,14 +42,14 @@ ffmpeg -re -f h264 -i - \
 # read a Stream from url and write back the Stream to localhost mediamtx Server on a publish topic 
 # (any topic you set becomes equally available on all the channels parallaly of the mediamtx Server)
 # reading from remote camera and writing Stream to localhost mediamtx Server
-ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@192.168.29.141:5543/live/channel0 -c copy -f rtsp rtsp://localhost:8554/camera
+ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@raspberrypi:5543/live/channel0 -c copy -f rtsp rtsp://localhost:8554/camera
 
 # read and write the stream at Startup using mediamtx.yml file
 paths:
   camera:
     source: publisher
     runOnInit: >
-      ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@192.168.29.141:5543/live/channel0
+      ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@raspberrypi:5543/live/channel0
       -c copy -f rtsp rtsp://localhost:8554/camera
     runOnInitRestart: yes
 
@@ -58,7 +58,7 @@ paths:
   camera:
     source: publisher
     runOnInit: >
-      bash -c 'until ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@192.168.29.141:5543/live/channel0
+      bash -c 'until ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@raspberrypi:5543/live/channel0
       -c copy -f rtsp rtsp://localhost:8554/camera; do echo "Retrying..."; sleep 5; done'
     runOnInitRestart: no
 
