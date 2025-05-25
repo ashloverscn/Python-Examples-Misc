@@ -42,27 +42,36 @@ ffmpeg -re -f h264 -i - \
 # read a Stream from url and write back the Stream to localhost mediamtx Server on a publish topic 
 # (any topic you set becomes equally available on all the channels parallaly of the mediamtx Server)
 # reading from remote camera and writing Stream to localhost mediamtx Server
-ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@raspberrypi:5543/live/channel0 -c copy -f rtsp rtsp://localhost:8554/camera
+ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@192.168.29.141:5543/live/channel0 -c copy -f rtsp rtsp://localhost:8554/camera
 
 # read and write the stream at Startup using mediamtx.yml file
 paths:
   camera:
     source: publisher
     runOnInit: >
-      ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@raspberrypi:5543/live/channel0
+      ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@192.168.29.141:5543/live/channel0
       -c copy -f rtsp rtsp://localhost:8554/camera
     runOnInitRestart: yes
+
+# read and write the stream with wait untill feed available
+paths:
+  camera:
+    source: publisher
+    runOnInit: >
+      bash -c 'until ffmpeg -rtsp_transport tcp -i rtsp://admin:admin@192.168.29.141:5543/live/channel0
+      -c copy -f rtsp rtsp://localhost:8554/camera; do echo "Retrying..."; sleep 5; done'
+    runOnInitRestart: no
 
 # all parallal channels
 # Great! MediaMTX is now running successfully on your Raspberry Pi 3B with all major streaming protocols enabled:
 
-# RTSP: rtsp://<pi-ip>:8554/
+# RTSP: rtsp://raspberrypi:8554/
 
-# RTMP: rtmp://<pi-ip>:1935/
+# RTMP: rtmp://raspberrypi:1935/
 
-# HLS: http://<pi-ip>:8888/
+# HLS: http://raspberrypi:8888/
 
-# WebRTC: http://<pi-ip>:8889/
+# WebRTC: http://raspberrypi:8889/
 
-# SRT: srt://<pi-ip>:8890
+# SRT: srt://raspberrypi:8890
 
