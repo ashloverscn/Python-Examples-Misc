@@ -6,6 +6,7 @@ https://snapcraft.io/install/mediamtx/raspbian
 # increse gpu memory slightly to avoid from getting stuck
 sudo sed -i 's/^gpu_mem=.*/gpu_mem=256/' /boot/config.txt
 
+#####################################################################################################
 # go to the latest release page https://github.com/bluenviron/mediamtx/releases
 # this is the latest right now at this time
 cd /usr/src/
@@ -37,6 +38,7 @@ sudo systemctl restart mediamtx.service
 sudo systemctl status mediamtx.service
 cd ~/
 
+#######################################################################################
 # create unitd file for systemd startup
 [Unit]
 Description=MediaMTX RTSP Server
