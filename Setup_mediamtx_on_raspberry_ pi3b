@@ -31,6 +31,10 @@ cd /etc/systemd/system/
 sudo rm -rf ./mediamtx.service
 sudo wget https://github.com/ashloverscn/Python-Examples-Misc/raw/refs/heads/main/mediamtx.service
 sudo chown root:root mediamtx.service
+sudo systemctl disable mediamtx.service
+sudo systemctl enable mediamtx.service
+sudo systemctl restart mediamtx.service
+sudo systemctl status mediamtx.service
 cd ~/
 
 # create unitd file for systemd startup
