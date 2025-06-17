@@ -10,6 +10,7 @@ sudo sed -i 's/^gpu_mem=.*/gpu_mem=256/' /boot/config.txt
 # go to the latest release page https://github.com/bluenviron/mediamtx/releases
 # this is the latest right now at this time
 cd /usr/src/
+sudo pkill -9 mediamtx
 sudo rm -rf ./mediamtx*
 sudo wget https://github.com/bluenviron/mediamtx/releases/download/v1.12.3/mediamtx_v1.12.3_linux_arm64.tar.gz
 sudo tar xzvf ./mediamtx_v1.12.3_linux_arm64.tar.gz
