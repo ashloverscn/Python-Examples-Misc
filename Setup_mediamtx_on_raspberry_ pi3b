@@ -6,14 +6,31 @@ https://snapcraft.io/install/mediamtx/raspbian
 # increse gpu memory slightly to avoid from getting stuck
 sudo sed -i 's/^gpu_mem=.*/gpu_mem=256/' /boot/config.txt
 
+# go to the latest release page https://github.com/bluenviron/mediamtx/releases
+# this is the latest right now at this time
+cd /usr/src/
+sudo rm -rf ./mediamtx*
+sudo wget https://github.com/bluenviron/mediamtx/releases/download/v1.12.3/mediamtx_v1.12.3_linux_arm64.tar.gz
+sudo tar xzvf ./mediamtx_v1.12.3_linux_arm64.tar.gz
+sudo \cp -r ./mediamtx /usr/local/bin/
+sudo chmod +x /usr/local/bin/mediamtx
+sudo rm -rf ./mediamtx*
 # make the config directory for mediamtx in etc
-sudo mkdir -p /etc/mediamtx
-cd /etc/mediamtx
+sudo mkdir -p /etc/mediamtx/
+cd /etc/mediamtx/
+sudo rm -rf mediamtx-rpi.yml
 sudo wget https://github.com/ashloverscn/Python-Examples-Misc/raw/refs/heads/main/mediamtx-rpi.yml
 sudo mv -f ./mediamtx-rpi.yml ./mediamtx.yml
+# generate the certificateS and give permission to them 
+sudo rm -rf ./server.*
 sudo openssl req -x509 -nodes -newkey rsa:2048 -keyout server.key -out server.crt -days 365 -subj "/CN=localhost"
-sudo chown pi:pi /etc/mediamtx/server.crt
-sudo chmod 600 /etc/mediamtx/server.key
+sudo chown root:root ./server.crt
+sudo chmod 600 ./server.key
+# get unitd file for systemd startup
+cd /etc/systemd/system/
+sudo rm -rf ./mediamtx.service
+sudo wget https://github.com/ashloverscn/Python-Examples-Misc/raw/refs/heads/main/mediamtx.service
+sudo chown root:root mediamtx.service
 cd ~/
 
 # create unitd file for systemd startup
