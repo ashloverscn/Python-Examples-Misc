@@ -6,15 +6,25 @@ https://snapcraft.io/install/mediamtx/raspbian
 # increse gpu memory slightly to avoid from getting stuck
 sudo sed -i 's/^gpu_mem=.*/gpu_mem=256/' /boot/config.txt
 
-# unit file 
+# make the config directory for mediamtx in etc
+sudo mkdir -p /etc/mediamtx
+cd /etc/mediamtx
+sudo wget https://github.com/ashloverscn/Python-Examples-Misc/raw/refs/heads/main/mediamtx-rpi.yml
+sudo mv -f ./mediamtx-rpi.yml ./mediamtx.yml
+sudo openssl req -x509 -nodes -newkey rsa:2048 -keyout server.key -out server.crt -days 365 -subj "/CN=localhost"
+sudo chown pi:pi /etc/mediamtx/server.crt
+sudo chmod 600 /etc/mediamtx/server.key
+cd ~/
+
+# create unitd file for systemd startup
 [Unit]
 Description=MediaMTX RTSP Server
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/mediamtx /opt/mediamtx/mediamtx.yml
+ExecStart=/usr/local/bin/mediamtx /etc/mediamtx/mediamtx.yml
 Restart=always
-User=pi
+User=root
 
 [Install]
 WantedBy=multi-user.target
