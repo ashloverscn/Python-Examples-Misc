@@ -26,7 +26,7 @@ else:
     scrambled = ''.join(random.choices(characters, k=num_chars))  # allow duplicates if needed
 
 # Append to file
-with open('scrambled_output.txt', 'a') as file:
+with open('password.txt', 'a') as file:
     file.write(scrambled + '\n')
 
-print(f"Scrambled string ({num_chars} chars) written to scrambled_output.txt")
+print(f"Scrambled string ({num_chars} chars) written to password.txt")
