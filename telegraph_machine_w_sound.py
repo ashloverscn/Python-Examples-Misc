@@ -25,17 +25,27 @@ class MorseDecoder:
         self.root = root
         self.root.title("Morse Code Decoder")
         self.mode = tk.StringVar(value="single")  # single or double paddle
+        self.paddle_swapped = tk.BooleanVar(value=False)  # swap checkbox
 
+        # GUI layout
         tk.Label(root, text="Morse Code Decoder", font=("Arial", 16)).pack(pady=5)
         tk.Label(root, text="Mode:").pack()
         tk.Radiobutton(root, text="Single Paddle (K key)", variable=self.mode, value="single").pack()
         tk.Radiobutton(root, text="Double Paddle (K=dit, L=dah)", variable=self.mode, value="double").pack()
 
-        # Label for current symbol
+        # Swap paddle checkbox
+        self.swap_checkbox = tk.Checkbutton(
+            root, text="Swap Paddle", variable=self.paddle_swapped, command=self.update_swap_color,
+            font=("Arial", 12)
+        )
+        self.swap_checkbox.pack(pady=5)
+        self.update_swap_color()
+
+        # Label for current Morse symbol
         self.current_symbol_label = tk.Label(root, text="", font=("Arial", 18), fg="blue")
         self.current_symbol_label.pack(pady=5)
 
-        # Read-only textbox
+        # Read-only text box
         self.text_box = tk.Text(root, height=10, width=50, font=("Arial", 14), state="disabled")
         self.text_box.pack(pady=10)
 
@@ -45,12 +55,17 @@ class MorseDecoder:
         self.press_start = 0
         self.in_letter = False
 
+        # Key bindings
         root.bind("<KeyPress>", self.key_press)
         root.bind("<KeyRelease>", self.key_release)
         root.bind("<BackSpace>", self.erase_char)
         root.bind("<Delete>", self.erase_char)
 
         self.root.after(100, self.update_loop)
+
+    def update_swap_color(self):
+        color = "red" if self.paddle_swapped.get() else "green"
+        self.swap_checkbox.config(fg=color)
 
     def play_sound(self, symbol):
         if symbol == '.':
@@ -65,27 +80,27 @@ class MorseDecoder:
                 self.press_start = time.time()
                 self.in_letter = True
         else:  # double-paddle mode
-            if key == 'K':
-                self.current_symbol += '.'
-                self.play_sound('.')
-                self.update_symbol_label()
-                self.last_press_time = time.time()  # fix: mark last press
-            elif key == 'L':
-                self.current_symbol += '-'
-                self.play_sound('-')
-                self.update_symbol_label()
-                self.last_press_time = time.time()  # fix: mark last press
+            # Determine symbol based on swap
+            swapped = self.paddle_swapped.get()
+            if (key == 'K' and not swapped) or (key == 'L' and swapped):
+                symbol = '.'
+            elif (key == 'L' and not swapped) or (key == 'K' and swapped):
+                symbol = '-'
+            else:
+                return  # ignore other keys
+
+            self.current_symbol += symbol
+            self.play_sound(symbol)
+            self.update_symbol_label()
+            self.last_press_time = time.time()
 
     def key_release(self, event):
         key = event.keysym.upper()
         if self.mode.get() == "single" and key == 'K' and self.in_letter:
             pulse = time.time() - self.press_start
-            if pulse < 0.25:
-                self.current_symbol += '.'
-                self.play_sound('.')
-            else:
-                self.current_symbol += '-'
-                self.play_sound('-')
+            symbol = '.' if pulse < 0.25 else '-'
+            self.current_symbol += symbol
+            self.play_sound(symbol)
             self.update_symbol_label()
             self.in_letter = False
             self.last_press_time = time.time()
@@ -94,8 +109,8 @@ class MorseDecoder:
         self.current_symbol_label.config(text=self.current_symbol)
 
     def update_loop(self):
-        if self.current_symbol and (self.mode.get() == "single" and not self.in_letter or self.mode.get()=="double"):
-            if time.time() - self.last_press_time > 0.5:  # letter separation
+        if self.current_symbol and (self.mode.get() == "single" and not self.in_letter or self.mode.get() == "double"):
+            if time.time() - self.last_press_time > 0.5:
                 self.add_symbol_to_text()
         self.root.after(100, self.update_loop)
 
