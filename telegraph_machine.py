@@ -1,3 +1,5 @@
+# download exe : https://github.com/ashloverscn/Python-Examples-Misc/raw/refs/heads/main/telegraph_machine.exe
+
 import tkinter as tk
 import time
 
