@@ -1,3 +1,5 @@
+# download exe : https://github.com/ashloverscn/Python-Examples-Misc/raw/refs/heads/main/telegraph_machine_w_sound.exe
+
 import tkinter as tk
 import time
 import winsound
