@@ -26,9 +26,7 @@ def add_entry():
         messagebox.showwarning("Input Error", "Required: First, Last, Phone, Address")
 
 def search_entry():
-    # Gather search terms from any field that isn't empty
     search_criteria = {k: v.get().strip() for k, v in combos.items() if v.get().strip()}
-    
     if not search_criteria:
         messagebox.showwarning("Input Error", "Enter data in any field to search.")
         return
@@ -43,31 +41,22 @@ def search_entry():
     if results.empty:
         messagebox.showinfo("No Results", "No matching contacts found.")
     else:
-        # 1. Update all dropdown lists with the full results set
         for key, col in col_map.items():
             combos[key]['values'] = results[col].fillna("").astype(str).tolist()
         
-        # 2. Automatically show the FIRST result in the text region
         fill_form(results.iloc[0])
-        
         if len(results) > 1:
-            messagebox.showinfo("Multiple Found", f"Found {len(results)} matches. First one displayed; use dropdowns to see others.")
+            messagebox.showinfo("Multiple Found", f"Found {len(results)} matches. Use dropdowns to switch.")
 
 def on_select(event):
-    # If user manually picks an item from a dropdown, sync all fields to that record
     caller = event.widget
     selected_val = caller.get()
-    
     df = pd.read_excel(FILE_NAME)
-    # Search for the full record matching the selected string
-    # We check across all columns to find the row that contains this specific value
     results = df[df.apply(lambda row: row.astype(str).str.contains(selected_val, case=False).any(), axis=1)]
-    
     if not results.empty:
         fill_form(results.iloc[0])
 
 def fill_form(row):
-    # Updates the text visible in the boxes
     combos["fname"].set(row["First Name"])
     combos["mname"].set(str(row["Middle Name"]) if pd.notna(row["Middle Name"]) else "")
     combos["lname"].set(row["Last Name"])
@@ -79,19 +68,26 @@ def delete_entry():
     l_name = combos["lname"].get().strip()
     
     if not f_name or not l_name:
-        messagebox.showwarning("Delete Error", "Need First and Last Name to delete.")
+        messagebox.showwarning("Delete Error", "Need at least First and Last Name to identify the contact.")
         return
 
-    df = pd.read_excel(FILE_NAME)
-    initial_len = len(df)
-    df = df[~((df['First Name'] == f_name) & (df['Last Name'] == l_name))]
+    # --- NEW CONFIRMATION STEP ---
+    confirm = messagebox.askyesno("Confirm Delete", f"Are you sure you want to delete the record for {f_name} {l_name}?")
     
-    if len(df) < initial_len:
-        df.to_excel(FILE_NAME, index=False)
-        clear_fields()
-        messagebox.showinfo("Deleted", "Contact removed.")
+    if confirm:  # If user clicks 'Yes'
+        df = pd.read_excel(FILE_NAME)
+        initial_len = len(df)
+        df = df[~((df['First Name'] == f_name) & (df['Last Name'] == l_name))]
+        
+        if len(df) < initial_len:
+            df.to_excel(FILE_NAME, index=False)
+            clear_fields()
+            messagebox.showinfo("Deleted", "Contact removed successfully.")
+        else:
+            messagebox.showerror("Error", "Exact contact match not found.")
     else:
-        messagebox.showerror("Error", "Contact not found.")
+        # If user clicks 'No', do nothing
+        pass
 
 def clear_fields():
     for cb in combos.values():
@@ -100,7 +96,7 @@ def clear_fields():
 
 # --- GUI Setup ---
 root = tk.Tk()
-root.title("Contact Manager - Auto-Fill Search")
+root.title("Secure Contact Manager")
 root.geometry("500x420")
 initialize_excel()
 
@@ -118,14 +114,11 @@ field_labels = [
 combos = {}
 for i, (label_text, key) in enumerate(field_labels):
     ttk.Label(main_frame, text=label_text).grid(row=i, column=0, sticky=tk.W, pady=8)
-    # Each field is a Combobox
     cb = ttk.Combobox(main_frame, width=35)
     cb.grid(row=i, column=1, pady=8, padx=10)
-    # Bind selection event
     cb.bind("<<ComboboxSelected>>", on_select)
     combos[key] = cb
 
-# Buttons
 btn_frame = ttk.Frame(main_frame)
 btn_frame.grid(row=6, column=0, columnspan=2, pady=25)
 
