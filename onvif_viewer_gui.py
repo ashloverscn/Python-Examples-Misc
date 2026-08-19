@@ -115,6 +115,28 @@ class ONVIFCameraViewerGUI:
         self.btn_zoom_out.bind("<ButtonPress-1>", lambda e: self.send_ptz_command(0, 0, -0.5))
         self.btn_zoom_out.bind("<ButtonRelease-1>", lambda e: self.send_ptz_stop())
 
+        # --- Keyboard Bindings for PTZ ---
+        self.root.bind("<KeyPress-Up>", lambda e: self.send_ptz_command(0, 0.5, 0))
+        self.root.bind("<KeyRelease-Up>", lambda e: self.send_ptz_stop())
+        self.root.bind("<KeyPress-Down>", lambda e: self.send_ptz_command(0, -0.5, 0))
+        self.root.bind("<KeyRelease-Down>", lambda e: self.send_ptz_stop())
+        self.root.bind("<KeyPress-Left>", lambda e: self.send_ptz_command(-0.5, 0, 0))
+        self.root.bind("<KeyRelease-Left>", lambda e: self.send_ptz_stop())
+        self.root.bind("<KeyPress-Right>", lambda e: self.send_ptz_command(0.5, 0, 0))
+        self.root.bind("<KeyRelease-Right>", lambda e: self.send_ptz_stop())
+
+        # Zoom In Bindings (+ key and Numpad +)
+        for key in ("<KeyPress-plus>", "<KeyPress-equal>", "<KeyPress-KP_Add>"):
+            self.root.bind(key, lambda e: self.send_ptz_command(0, 0, 0.5))
+        for key in ("<KeyRelease-plus>", "<KeyRelease-equal>", "<KeyRelease-KP_Add>"):
+            self.root.bind(key, lambda e: self.send_ptz_stop())
+
+        # Zoom Out Bindings (- key and Numpad -)
+        for key in ("<KeyPress-minus>", "<KeyPress-KP_Subtract>"):
+            self.root.bind(key, lambda e: self.send_ptz_command(0, 0, -0.5))
+        for key in ("<KeyRelease-minus>", "<KeyRelease-KP_Subtract>"):
+            self.root.bind(key, lambda e: self.send_ptz_stop())
+
         # Status Label
         self.lbl_status = ttk.Label(control_panel, text="Status: Idle", wraplength=180, foreground="blue")
         self.lbl_status.pack(side=tk.BOTTOM, fill=tk.X, pady=10)
@@ -292,17 +314,13 @@ class ONVIFCameraViewerGUI:
                 img = Image.fromarray(frame)
                 img_width, img_height = img.size
                 
-                # --- Dynamic 1:1 Aspect Ratio Scaling Logic ---
-                # Calculate the scaling factor for both width and height
                 ratio_w = canvas_width / img_width
                 ratio_h = canvas_height / img_height
                 scaling_factor = min(ratio_w, ratio_h)
                 
-                # Determine the absolute new dimensions required to perfectly fill the canvas maximums
                 new_width = int(img_width * scaling_factor)
                 new_height = int(img_height * scaling_factor)
                 
-                # Perform the structural sizing frame conversion 
                 img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
                 img_tk = ImageTk.PhotoImage(image=img)
                 
